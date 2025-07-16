@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  docker_api:
+    # Constrói a imagem a partir do Dockerfile no diretório atual
+    build: .
+    container_name: docker_api
+    restart: unless-stopped
+    networks:
+      - default
+      - public_network
+    # Mapeia a porta 5001 do contêiner para a porta 5001 do host
+    ports:
+      - "5001:5001"
+      
+    # Variável de ambiente para dizer ao script onde estão os projetos
+    environment:
+      - COMPOSE_PROJECT_PATH=/projects
+      
+    # VOLUMES: Esta é a parte mais importante!
+    volumes:
+      # 1. Permite que o contêiner controle o Docker do host
+      - /var/run/docker.sock:/var/run/docker.sock
+      
+      # 2. Mapeia o diretório de projetos do host para dentro do contêiner
+      #    Troque '/home/ubuntu/' pelo caminho onde suas pastas de projeto ficam.
+      - /home/ubuntu:/projects
+
+      # 3. Data
+      - dockerapi_data:/data
+networks:
+  default:
+  public_network:
+    external: true
+volumes:
+  dockerapi_data:
