@@ -29,7 +29,7 @@ Siga os passos abaixo para ter a API rodando em seu ambiente.
 ```bash
 # 1. Clone o repositório
 git clone https://github.com/LucasArgate/docker-api.git
-cd portainer-api
+cd docker-api
 
 # 2. Crie um ambiente virtual e instale as dependências
 python -m venv venv
@@ -64,6 +64,11 @@ A maneira mais fácil de rodar em produção é usando o `docker-compose.yml` fo
 
 # 3. Inicie o serviço
 docker compose up -d
+```
+
+# 3. Compilando sua imagem :)
+```
+ sudo docker compose up -d --build --force-recreate
 ```
 
 ## 🤖 Caso de Uso: Automação de Deploy com GitHub Actions
