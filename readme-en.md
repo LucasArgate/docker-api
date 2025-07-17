@@ -43,7 +43,7 @@ services:
       # Defina a chave de API pública que será usada para autenticar os pedidos.
       - PUBLIC_API_KEY=YOUR_API_KEY_HERE
       # Define o caminho DENTRO do contêiner onde os projetos serão salvos.
-      - COMPOSE_PROJECT_PATH=/app/projects
+      - COMPOSE_PROJECT_PATH=/app/projects    
 ```
 
 

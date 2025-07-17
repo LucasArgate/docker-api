@@ -47,7 +47,25 @@ services:
 ```
 
 
-## 🚀 Começando
+
+## 📚 Documentação da API
+
+A API é auto-documentada usando Swagger UI. Após iniciar a aplicação, acesse `http://localhost:5001/docs` para ver todos os endpoints, modelos e testá-los interativamente.
+
+### Endpoints Principais
+
+| Método | Endpoint                               | Descrição                                                    |
+| :----- | :------------------------------------- | :----------------------------------------------------------- |
+| `GET`    | `/containers`                          | Lista todos os contêineres no host.                            |
+| `POST`   | `/containers/create`                   | Cria um novo serviço a partir de uma definição JSON.             |
+| `POST`   | `/containers/recreate/{service_name}`  | Puxa a imagem mais recente e recria um serviço Compose.        |
+| `PUT`    | `/containers/{container_name}`         | Edita um contêiner standalone com novas configurações.        |
+| `DELETE` | `/containers/{container_name}`         | Remove um contêiner.                                         |
+| `GET`    | `/registry`                            | Lista todos os registries configurados.                      |
+| `POST`   | `/registry`                            | Adiciona as credenciais de um novo registry.                  |
+| `DELETE` | `/registry/{registry_name}`            | Remove um registry.      
+
+## 🚀 Faça você mesmo
 
 Siga os passos abaixo para ter a API rodando em seu ambiente.
 
@@ -160,23 +178,7 @@ Agora, toda vez que você fizer um push para a `main`, o GitHub Actions irá:
 2.  Enviá-la para o Docker Hub.
 3.  Fazer uma chamada segura para a nossa API.
 4.  A API irá puxar a nova imagem e recriar o contêiner, completando o ciclo de deploy automatizado!
-
-## 📚 Documentação da API
-
-A API é auto-documentada usando Swagger UI. Após iniciar a aplicação, acesse `http://localhost:5001/docs` para ver todos os endpoints, modelos e testá-los interativamente.
-
-### Endpoints Principais
-
-| Método | Endpoint                               | Descrição                                                    |
-| :----- | :------------------------------------- | :----------------------------------------------------------- |
-| `GET`    | `/containers`                          | Lista todos os contêineres no host.                            |
-| `POST`   | `/containers/create`                   | Cria um novo serviço a partir de uma definição JSON.             |
-| `POST`   | `/containers/recreate/{service_name}`  | Puxa a imagem mais recente e recria um serviço Compose.        |
-| `PUT`    | `/containers/{container_name}`         | Edita um contêiner standalone com novas configurações.        |
-| `DELETE` | `/containers/{container_name}`         | Remove um contêiner.                                         |
-| `GET`    | `/registry`                            | Lista todos os registries configurados.                      |
-| `POST`   | `/registry`                            | Adiciona as credenciais de um novo registry.                  |
-| `DELETE` | `/registry/{registry_name}`            | Remove um registry.                                          |
+                                    |
 
 ## 🤝 Contribuindo
 
