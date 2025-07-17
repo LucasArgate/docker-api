@@ -1,0 +1,49 @@
+# .github/workflows/publish-docker.yml
+
+name: Publish Docker image to Docker Hub
+
+on:
+  push:
+    branches: ['main'] # Dispara o workflow em pushes para a branch main
+
+jobs:
+  build_and_push:
+    name: Build and push Docker image
+    runs-on: ubuntu-latest # O job rodará em uma máquina virtual Ubuntu
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        # Clona o seu repositório para dentro do runner do GitHub Actions
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+        # Usa os secrets configurados no seu repositório para autenticar no Docker Hub
+
+      - name: Extract metadata for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: lucasargate/docker-api # IMPORTANTE: Troque 'lucasargate' pelo seu usuário do Docker Hub
+          # Esta action gera automaticamente tags para a imagem.
+          # Para a branch 'main', ele irá gerar a tag 'latest'.
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        # Configura o Buildx, que é a ferramenta moderna de build do Docker.
+
+      - name: Build and push Docker image
+        id: build-and-push
+        uses: docker/build-push-action@v5
+        with:
+          context: . # O contexto do build é a raiz do seu projeto
+          push: true # Garante que a imagem seja enviada para o registry
+          tags: ${{ steps.meta.outputs.tags }} # Usa as tags geradas pelo 'metadata-action' (ex: seu-usuario/docker-api:latest)
+          labels: ${{ steps.meta.outputs.labels }} # Adiciona labels úteis à imagem
+
+      - name: Image digest
+        run: echo ${{ steps.build-and-push.outputs.digest }}
+        # Apenas exibe o digest da imagem gerada no final do log.
