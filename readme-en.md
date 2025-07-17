@@ -18,6 +18,36 @@ The core motivation is to empower developers to automate their workflows. Imagin
 
 ## 🚀 Getting Started
 
+```yaml
+
+version: '3.8'
+
+services:
+  docker-api:
+
+    image: lucasargate/docker-api:latest
+    container_name: docker-api-service
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    volumes:
+      # Mapeia o socket do Docker do host para o contêiner.
+      # NECESSÁRIO para que a API possa gerenciar os contêineres do host.
+      - /var/run/docker.sock:/var/run/docker.sock
+
+      # Mapeia um diretório no host para dentro do contêiner.
+      # A API irá criar os arquivos docker-compose.yml dos seus serviços aqui.
+      # CRIE ESTE DIRETÓRIO: ./docker-projects no mesmo local do docker-compose.yml
+      - ./docker-projects:/app/projects
+    environment:
+      # Defina a chave de API pública que será usada para autenticar os pedidos.
+      - PUBLIC_API_KEY=YOUR_API_KEY_HERE
+      # Define o caminho DENTRO do contêiner onde os projetos serão salvos.
+      - COMPOSE_PROJECT_PATH=/app/projects
+```
+
+
+
 Follow the steps below to get the API running in your environment.
 
 ### Prerequisites
@@ -168,4 +198,8 @@ Here are some of the features and improvements planned for the future of the pro
 -   **Webhook System**:
     -   Implement a CRUD system for webhooks, allowing the API to notify external systems about events (e.g., container created, updated, etc.).
 -   **Generative AI Interface**:
-    -   Develop a view or interactive CLI that uses generative AI to simplify container and configuration creation, reducing the need to manually create JSON files.
+    -   Develop a view or interactive CLI that uses generative AI to simplify container and configuration creation, reducing the need to manually create JSON files.    
+
+## 🙏 Acknowledgments
+
+A special thanks to my friend, [Paulo Ribeiro](https://github.com/phr-X), for his invaluable guidance and support in this project.

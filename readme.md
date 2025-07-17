@@ -16,6 +16,37 @@ A principal motivação é capacitar desenvolvedores a automatizarem seus fluxos
 *   **Operações CRUD**: Liste, crie, edite e remova contêineres e registries através de uma API RESTful.
 *   **Segurança**: Proteção de endpoints com autenticação via Bearer Token.
 
+
+## 🚀Exemplo de consumo:
+```yaml
+
+version: '3.8'
+
+services:
+  docker-api:
+
+    image: lucasargate/docker-api:latest
+    container_name: docker-api-service
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    volumes:
+      # Mapeia o socket do Docker do host para o contêiner.
+      # NECESSÁRIO para que a API possa gerenciar os contêineres do host.
+      - /var/run/docker.sock:/var/run/docker.sock
+
+      # Mapeia um diretório no host para dentro do contêiner.
+      # A API irá criar os arquivos docker-compose.yml dos seus serviços aqui.
+      # CRIE ESTE DIRETÓRIO: ./docker-projects no mesmo local do docker-compose.yml
+      - ./docker-projects:/app/projects
+    environment:
+      # Defina a chave de API pública que será usada para autenticar os pedidos.
+      - PUBLIC_API_KEY=YOUR_API_KEY_HERE
+      # Define o caminho DENTRO do contêiner onde os projetos serão salvos.
+      - COMPOSE_PROJECT_PATH=/app/projects
+```
+
+
 ## 🚀 Começando
 
 Siga os passos abaixo para ter a API rodando em seu ambiente.
@@ -174,3 +205,7 @@ Aqui estão algumas das funcionalidades e melhorias planejadas para o futuro do 
     -   Implementar um sistema de CRUD para webhooks, permitindo que a API notifique sistemas externos sobre eventos (ex: contêiner criado, atualizado, etc.).
 -   **Interface com IA Generativa**:
     -   Desenvolver uma view ou CLI interativa que utilize IA generativa para simplificar a criação de contêineres e configurações, reduzindo a necessidade de criar JSONs manualmente.
+
+## 🙏 Agradecimentos
+
+Um agradecimento especial ao meu amigo, [Paulo Ribeiro](https://github.com/phr-X), por sua orientação e apoio inestimáveis neste projeto.

@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  docker-api:
+    # IMPORTANTE: Troque 'lucasargate' pelo seu nome de usuário do Docker Hub.
+    # Esta imagem será baixada do Docker Hub, onde o seu workflow a publicou.
+    image: lucasargate/docker-api:latest
+    container_name: docker-api-service
+    restart: unless-stopped
+    ports:
+      - "5001:5001"
+    volumes:
+      # Mapeia o socket do Docker do host para o contêiner.
+      # NECESSÁRIO para que a API possa gerenciar os contêineres do host.
+      - /var/run/docker.sock:/var/run/docker.sock
+
+      # Mapeia um diretório no host para dentro do contêiner.
+      # A API irá criar os arquivos docker-compose.yml dos seus serviços aqui.
+      # CRIE ESTE DIRETÓRIO: ./docker-projects no mesmo local do docker-compose.yml
+      - ./docker-projects:/app/projects
+    environment:
+      # Defina a chave de API pública que será usada para autenticar os pedidos.
+      - PUBLIC_API_KEY=dkrapi-pub-a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4
+      # Define o caminho DENTRO do contêiner onde os projetos serão salvos.
+      - COMPOSE_PROJECT_PATH=/app/projects
