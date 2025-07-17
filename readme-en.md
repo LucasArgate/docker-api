@@ -2,6 +2,8 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+Veja nossa [Versão em português](readme.md) !
+
 A lightweight API, written in FastAPI, to manage and automate your Docker containers. This project was born from the need for a simple, programmable tool to orchestrate deployments, serving as an agnostic alternative to complex UIs like Portainer, with a primary focus on automation and integration with CI/CD pipelines.
 
 The core motivation is to empower developers to automate their workflows. Imagine updating your production application with a simple `git push`, where GitHub Actions builds your new Docker image, pushes it to a private registry, and then notifies this API to recreate the container with the new version. **This API is designed precisely for that purpose.**
